@@ -1,0 +1,134 @@
+/* ----- Reset & Base ----- */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ffb6c1 0%, #fdfdfd 100%);
+  color: #191970;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ----- Navbar ----- */
+.navbar {
+  background: #191970;
+}
+
+.navbar .navbar-brand {
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar .navbar-brand:hover {
+  color: #ffb6c1;
+}
+
+.btn-login {
+  background: #e9967a;
+  color: #fff;
+  border-radius: 20px;
+  padding: 6px 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background: #ffb6c1;
+  color: #191970;
+  transform: translateY(-2px);
+}
+
+/* ----- Hero ----- */
+.hero {
+  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/crossword.png");
+  background-size: cover;
+  background-position: center;
+  color: #191970;
+  padding: 100px 20px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #191970;
+  animation: fadeDown 1s ease;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #444;
+  animation: fadeUp 1.2s ease;
+}
+
+.btn-contacto {
+  background: #191970;
+  color: #fff;
+  border-radius: 25px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-contacto:hover {
+  background: #e9967a;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* ----- Sección Semanas ----- */
+#semanas h2 {
+  color: #191970;
+  font-weight: bold;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.card-title {
+  color: #191970;
+  font-weight: 600;
+}
+
+.btn-semana {
+  background: #e9967a;
+  color: #fff;
+  border-radius: 20px;
+  padding: 8px 18px;
+  transition: all 0.3s;
+}
+
+.btn-semana:hover {
+  background: #ffb6c1;
+  color: #191970;
+  transform: translateY(-2px);
+}
+
+/* ----- Footer ----- */
+footer {
+  background: #191970;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+/* ----- Animaciones ----- */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

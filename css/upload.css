@@ -1,0 +1,79 @@
+/* 🎨 Paleta de colores */
+:root {
+  --color1: #355070;
+  --color2: #6d597a;
+  --color3: #b56576;
+  --color4: #e56b6f;
+  --color5: #eaac8b;
+}
+
+body {
+  background: linear-gradient(135deg, var(--color1), var(--color2));
+  color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.back-btn {
+  padding: 8px 20px;
+  color: var(--color5);
+  border: 1px solid var(--color5);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.back-btn:hover {
+  background: var(--color5);
+  color: #000;
+}
+
+.card-custom {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease;
+}
+.card-custom:hover {
+  transform: translateY(-4px);
+}
+
+h3 {
+  color: var(--color4);
+  font-weight: bold;
+}
+
+.btn-custom {
+  background: var(--color3);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  transition: 0.3s;
+}
+.btn-custom:hover {
+  background: var(--color4);
+}
+
+.table-dark {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-dark th {
+  color: var(--color5);
+}
+
+.table-dark a {
+  color: var(--color5);
+  text-decoration: none;
+}
+.table-dark a:hover {
+  text-decoration: underline;
+}

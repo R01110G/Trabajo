@@ -1,0 +1,23 @@
+{
+  "semanas": {
+    "1": [
+      { 
+        "nombre": "Documento ejemplo (PDF)", 
+        "archivo": "archivos/semana1/Documento.pdf", 
+        "tipo": "pdf",
+        "fecha": "2025-09-11",
+        "usuario": "omar"
+      }
+    ],
+    "2": [
+      { 
+        "nombre": "Hola (Word)", 
+        "archivo": "archivos/semana2/hola.docx", 
+        "tipo": "word",
+        "fecha": "2025-09-10",
+        "usuario": "omar"
+      }
+    ],
+    "3": []
+  }
+}

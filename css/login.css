@@ -1,0 +1,106 @@
+/* ----- Paleta ----- */
+/* Azul Medianoche */
+:root {
+  --azul: #191970;
+  --rosa-caramelo: #ffb6c1;
+  --rosa-desierto: #e9967a;
+  --blanco: #ffffff;
+  --gris-suave: #f9f9f9;
+}
+
+/* ----- Base ----- */
+body {
+  background: linear-gradient(135deg, var(--rosa-caramelo), var(--rosa-desierto));
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* ----- Caja Login ----- */
+.login-box {
+  background: var(--blanco);
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 1s ease;
+}
+
+/* ----- Título ----- */
+h2 {
+  color: var(--azul);
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+/* ----- Inputs ----- */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: var(--rosa-desierto);
+  box-shadow: 0 0 8px rgba(233, 150, 122, 0.5);
+}
+
+/* ----- Botón Ingresar ----- */
+button {
+  width: 100%;
+  padding: 12px;
+  background: var(--azul);
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: var(--blanco);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: var(--rosa-desierto);
+  transform: translateY(-2px);
+}
+
+/* ----- Error ----- */
+.error-message {
+  margin-top: 15px;
+  color: #b56576;
+  font-weight: bold;
+  display: none;
+}
+
+/* ----- Botón Volver ----- */
+.back-btn {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 8px 20px;
+  color: var(--azul);
+  border: 1px solid var(--azul);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

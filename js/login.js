@@ -31,7 +31,7 @@ form.addEventListener("submit", async (e) => {
     if (error) throw error;
 
     // ✅ Login correcto → redirigir a upload.html
-    window.location.href = "upload.html";
+    window.location.href = "panel.html";
   } catch (err) {
     errorMessage.style.display = "block";
     errorMessage.textContent = "⚠ Error al iniciar sesión: " + err.message;

@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// 🔑 Configuración Supabase actualizada
+// 🔑 Configuración Supabase
 const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -10,11 +10,19 @@ const estado = document.getElementById("estado");
 const listaArchivos = document.getElementById("listaArchivos");
 const filtroSemana = document.getElementById("filtroSemana");
 
+// 🔹 Función para limpiar nombres
+function sanitizeFileName(name) {
+  return name
+    .normalize("NFD") // separar acentos
+    .replace(/[\u0300-\u036f]/g, "") // quitar acentos
+    .replace(/[^a-zA-Z0-9.-_]/g, "_"); // reemplazar caracteres inválidos
+}
+
 // 🔼 Subir archivo
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const archivo = document.getElementById("archivo").files[0];
-  const semana = document.getElementById("semana").value;
+  const semana = sanitizeFileName(document.getElementById("semana").value);
 
   if (!archivo) {
     estado.textContent = "⚠️ Selecciona un archivo.";
@@ -25,11 +33,9 @@ form.addEventListener("submit", async (e) => {
   estado.textContent = "⏳ Subiendo...";
   estado.style.color = "orange";
 
-  const filePath = `${semana}/${Date.now()}_${archivo.name}`;
+  const filePath = `${semana}/${Date.now()}_${sanitizeFileName(archivo.name)}`;
 
-  const { error } = await supabase.storage
-    .from("hola") // ← Cambiado a "hola"
-    .upload(filePath, archivo);
+  const { error } = await supabase.storage.from("hola").upload(filePath, archivo);
 
   if (error) {
     estado.textContent = "❌ Error al subir: " + error.message;
@@ -45,10 +51,9 @@ form.addEventListener("submit", async (e) => {
 });
 
 // 📂 Cargar archivos de una semana
-async function cargarArchivos(semana) {
-  const { data, error } = await supabase.storage
-    .from("hola") // ← Cambiado a "hola"
-    .list(semana, { limit: 100 });
+async function cargarArchivos(semanaInput) {
+  const semana = sanitizeFileName(semanaInput);
+  const { data, error } = await supabase.storage.from("hola").list(semana, { limit: 100 });
 
   listaArchivos.innerHTML = "";
 
@@ -63,10 +68,7 @@ async function cargarArchivos(semana) {
   }
 
   data.forEach(async (file) => {
-    const { data: urlData } = await supabase.storage
-      .from("hola") // ← Cambiado a "hola"
-      .getPublicUrl(`${semana}/${file.name}`);
-
+    const { data: urlData } = await supabase.storage.from("hola").getPublicUrl(`${semana}/${file.name}`);
     const fecha = new Date(file.created_at || Date.now()).toLocaleString();
 
     const row = document.createElement("tr");
@@ -88,7 +90,7 @@ filtroSemana.addEventListener("change", () => {
 
 // 🗑️ Eliminar archivo
 window.eliminarArchivo = async (path) => {
-  const { error } = await supabase.storage.from("hola").remove([path]); // ← Cambiado a "hola"
+  const { error } = await supabase.storage.from("hola").remove([path]);
   if (error) {
     alert("❌ Error al eliminar: " + error.message);
   } else {

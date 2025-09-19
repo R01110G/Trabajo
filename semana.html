@@ -108,22 +108,42 @@
       const verUrl = urlData?.publicUrl || "#";
       const descargarUrl = `${verUrl}?download=${file.name}`;
 
+      // ⚠️ Supabase no devuelve created_at, inventamos una fecha "falsa"
+      const fecha = new Date().toLocaleString();
+
       const col = document.createElement("div");
       col.className = "col-12";
 
       col.innerHTML = `
         <div class="card shadow-sm p-2 text-center">
           <h6 class="card-title text-truncate" title="${file.name}">${file.name}</h6>
+          <small class="text-muted">📅 ${fecha}</small>
           <div class="d-grid gap-1 mt-2">
             <button class="btn btn-primary btn-sm ver-btn">👁 Vista previa</button>
-            <a href="${descargarUrl}" class="btn btn-success btn-sm">⬇ Descargar</a>
+            <a href="${descargarUrl}" class="btn btn-success btn-sm" target="_blank">⬇ Descargar</a>
+            <button class="btn btn-danger btn-sm borrar-btn">🗑 Eliminar</button>
           </div>
         </div>
       `;
 
-      // 📌 Evento para mostrar preview
+      // 📌 Vista previa
       col.querySelector(".ver-btn").addEventListener("click", () => {
         mostrarPreview(verUrl, file.name);
+      });
+
+      // 📌 Eliminar
+      col.querySelector(".borrar-btn").addEventListener("click", async () => {
+        if (confirm(`¿Seguro que deseas eliminar "${file.name}"?`)) {
+          const { error: deleteError } = await supabase.storage
+            .from("archivos")
+            .remove([`${carpeta}/${file.name}`]);
+          if (deleteError) {
+            alert("❌ Error al eliminar: " + deleteError.message);
+          } else {
+            alert("✅ Archivo eliminado.");
+            cargarArchivos(); // refrescar lista
+          }
+        }
       });
 
       listaArchivos.appendChild(col);

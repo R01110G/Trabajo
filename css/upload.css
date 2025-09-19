@@ -1,17 +1,19 @@
-/* 🎨 Paleta de colores */
+/* 🎨 Paleta de colores (Rojo - Amarillo - Verde Limón) */
 :root {
-  --color1: #355070;
-  --color2: #6d597a;
-  --color3: #b56576;
-  --color4: #e56b6f;
-  --color5: #eaac8b;
+  --color1: #ff4d4d;   /* Rojo */
+  --color2: #ffd93d;   /* Amarillo */
+  --color3: #32cd32;   /* Verde limón */
+  --color4: #e63946;   /* Rojo intenso */
+  --color5: #f1fa8c;   /* Amarillo claro */
 }
 
 body {
-  background: linear-gradient(135deg, var(--color1), var(--color2));
+  background: linear-gradient(135deg, var(--color1), var(--color2), var(--color3));
   color: #f8f9fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  background-size: 200% 200%;
+  animation: gradientMove 12s ease infinite;
 }
 
 .top-bar {
@@ -33,47 +35,59 @@ body {
 }
 
 .card-custom {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   padding: 25px;
   border-radius: 15px;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 .card-custom:hover {
   transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 h3 {
-  color: var(--color4);
+  color: var(--color3);
   font-weight: bold;
 }
 
 .btn-custom {
-  background: var(--color3);
+  background: var(--color1);
   color: #fff;
   font-weight: bold;
   border: none;
+  border-radius: 6px;
   transition: 0.3s;
 }
 .btn-custom:hover {
-  background: var(--color4);
+  background: var(--color3);
+  transform: scale(1.05);
 }
 
 .table-dark {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   overflow: hidden;
 }
 
 .table-dark th {
-  color: var(--color5);
+  color: var(--color2);
 }
 
 .table-dark a {
-  color: var(--color5);
+  color: var(--color3);
   text-decoration: none;
+  font-weight: 600;
 }
 .table-dark a:hover {
   text-decoration: underline;
+  color: var(--color1);
+}
+
+/* 🌈 Animación degradado */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

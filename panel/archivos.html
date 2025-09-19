@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archivos por Semana</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #preview {
+      min-height: 300px;
+      border: 2px dashed #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 15px;
+    }
+    #preview iframe,
+    #preview img,
+    #preview video {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-4">
+  <a href="/panel.html" class="btn btn-secondary mb-3">← Volver a inicio</a>
+
+  <div class="card p-4">
+    <h3 class="mb-3">📂 Archivos por semana</h3>
+    <div class="mb-3">
+      <label for="filtroSemana" class="form-label">Selecciona la semana</label>
+      <select id="filtroSemana" class="form-select">
+        <option value="Semana 1">Semana 1</option>
+        <option value="Semana 2">Semana 2</option>
+        <option value="Semana 3">Semana 3</option>
+        <option value="Semana 4">Semana 4</option>
+      </select>
+    </div>
+
+    <table class="table table-dark table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Archivo</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody id="listaArchivos">
+        <tr><td colspan="2">Cargando...</td></tr>
+      </tbody>
+    </table>
+
+    <h4 class="mt-4">Vista previa</h4>
+    <div id="preview">
+      <p class="text-muted">👈 Selecciona un archivo para ver su vista previa aquí.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Aquí mantenemos tu JS llamado lista.js -->
+<script type="module" src="js/lista.js"></script>
+</body>
+</html>

@@ -37,7 +37,7 @@
     <!-- Lista de archivos -->
     <div class="col-md-4">
       <div id="listaArchivos" class="row g-3">
-        <!-- Archivos aquí -->
+        <div class="col-12 text-center text-muted"><p>📂 Cargando archivos...</p></div>
       </div>
     </div>
 
@@ -52,75 +52,79 @@
 </div>
 
 <script type="module">
-  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  // 🔑 Configuración Supabase (tu bucket "hola")
-  const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// 🔑 Configuración Supabase (tu bucket "hola")
+const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const params = new URLSearchParams(window.location.search);
-  const semanaNumero = params.get("semana") || "1";
+const params = new URLSearchParams(window.location.search);
+const semanaNumero = params.get("semana") || "1";
 
-  // Normalizar nombre de carpeta (para evitar espacios/acentos)
-  function sanitizeName(name) {
-    return name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9._-]/g, "_");
+// Normalizar nombres de carpeta y archivo
+function sanitizeName(name) {
+  return name.normalize("NFD")
+             .replace(/[\u0300-\u036f]/g, "")
+             .replace(/\s+/g, "_")
+             .replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+const carpeta = sanitizeName(`Semana ${semanaNumero}`);
+document.getElementById("tituloSemana").textContent = `Trabajos - Semana ${semanaNumero}`;
+
+const listaArchivos = document.getElementById("listaArchivos");
+const previewDiv = document.getElementById("preview");
+
+async function cargarArchivos() {
+  const { data, error } = await supabase.storage.from("hola").list(carpeta, { limit: 100 });
+  listaArchivos.innerHTML = "";
+
+  if (error) {
+    listaArchivos.innerHTML = `<div class="col-12 text-center text-danger"><p>❌ Error al listar: ${error.message}</p></div>`;
+    return;
   }
 
-  const carpeta = sanitizeName(`Semana ${semanaNumero}`);
-  document.getElementById("tituloSemana").textContent = `Trabajos - Semana ${semanaNumero}`;
+  if (!data || data.length === 0) {
+    listaArchivos.innerHTML = `<div class="col-12 text-center text-muted"><p>⚠️ No hay archivos en "${carpeta}".</p></div>`;
+    return;
+  }
 
-  const listaArchivos = document.getElementById("listaArchivos");
-  const previewDiv = document.getElementById("preview");
+  for (const file of data) {
+    const { data: urlData } = supabase.storage.from("hola").getPublicUrl(`${carpeta}/${file.name}`);
+    const verUrl = urlData?.publicUrl || "#";
+    const descargarUrl = verUrl + "?download=" + encodeURIComponent(file.name);
 
-  async function cargarArchivos() {
-    const { data, error } = await supabase.storage.from("hola").list(carpeta, { limit: 100 });
-    listaArchivos.innerHTML = "";
-
-    if (error) {
-      listaArchivos.innerHTML = `<div class="col-12 text-center text-danger"><p>❌ Error al listar: ${error.message}</p></div>`;
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      listaArchivos.innerHTML = `<div class="col-12 text-center text-muted"><p>⚠️ No hay archivos en "${carpeta}".</p></div>`;
-      return;
-    }
-
-    for (const file of data) {
-      const { data: urlData } = supabase.storage.from("hola").getPublicUrl(`${carpeta}/${file.name}`);
-      const verUrl = urlData?.publicUrl || "#";
-      const descargarUrl = `${verUrl}?download=${file.name}`;
-
-      const col = document.createElement("div");
-      col.className = "col-12";
-      col.innerHTML = `
-        <div class="card shadow-sm p-2 text-center">
-          <h6 class="card-title text-truncate" title="${file.name}">${file.name}</h6>
-          <div class="d-grid gap-1 mt-2">
-            <button class="btn btn-primary btn-sm ver-btn">👁 Vista previa</button>
-            <a href="${descargarUrl}" class="btn btn-success btn-sm">⬇ Descargar</a>
-          </div>
+    const col = document.createElement("div");
+    col.className = "col-12";
+    col.innerHTML = `
+      <div class="card shadow-sm p-2 text-center">
+        <h6 class="card-title text-truncate" title="${file.name}">${file.name}</h6>
+        <div class="d-grid gap-1 mt-2">
+          <button class="btn btn-primary btn-sm ver-btn">👁 Vista previa</button>
+          <a href="${descargarUrl}" class="btn btn-success btn-sm">⬇ Descargar</a>
         </div>
-      `;
-      col.querySelector(".ver-btn").addEventListener("click", () => {
-        mostrarPreview(verUrl, file.name);
-      });
-      listaArchivos.appendChild(col);
-    }
+      </div>
+    `;
+    col.querySelector(".ver-btn").addEventListener("click", () => {
+      mostrarPreview(verUrl, file.name);
+    });
+    listaArchivos.appendChild(col);
   }
+}
 
-  function mostrarPreview(url, name) {
-    let content = "";
-    if (name.endsWith(".pdf")) content = `<iframe src="${url}" title="PDF"></iframe>`;
-    else if (name.match(/\.(jpg|jpeg|png|gif)$/i)) content = `<img src="${url}" class="img-fluid rounded shadow" alt="Imagen">`;
-    else if (name.match(/\.(mp4|webm)$/i)) content = `<video src="${url}" controls class="w-100 rounded shadow"></video>`;
-    else if (name.match(/\.(docx|doc|pptx|ppt|xlsx|xls)$/i)) content = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" title="Office"></iframe>`;
-    else content = `<div class="text-center text-muted">📄 No hay vista previa.<br><a href="${url}" target="_blank" class="btn btn-primary mt-3">Abrir archivo</a></div>`;
-    previewDiv.innerHTML = content;
-  }
+function mostrarPreview(url, name) {
+  let content = "";
+  if (name.endsWith(".pdf")) content = `<iframe src="${url}" title="PDF"></iframe>`;
+  else if (name.match(/\.(jpg|jpeg|png|gif)$/i)) content = `<img src="${url}" class="img-fluid rounded shadow" alt="Imagen">`;
+  else if (name.match(/\.(mp4|webm)$/i)) content = `<video src="${url}" controls class="w-100 rounded shadow"></video>`;
+  else if (name.match(/\.(docx|doc|pptx|ppt|xlsx|xls)$/i)) content = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" title="Office"></iframe>`;
+  else content = `<div class="text-center text-muted">📄 No hay vista previa.<br><a href="${url}" target="_blank" class="btn btn-primary mt-3">Abrir archivo</a></div>`;
+  previewDiv.innerHTML = content;
+}
 
-  cargarArchivos();
+// 🚀 Cargar archivos al abrir la página
+cargarArchivos();
 </script>
 
 </body>

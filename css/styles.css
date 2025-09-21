@@ -1,142 +1,122 @@
-/* ----- Reset & Base ----- */
 body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #ff4d4d 0%, #ffd93d 50%, #32cd32 100%);
-  color: #222;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  animation: gradientMove 10s ease infinite;
-  background-size: 200% 200%;
-}
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url("https://images.unsplash.com/photo-1523240795612-9a054b0db644") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
 
-/* ----- Navbar ----- */
-.navbar {
-  background: #ff4d4d; /* rojo */
-}
+    /* Navbar transparente */
+    .navbar {
+      background: rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(8px);
+    }
 
-.navbar .navbar-brand {
-  color: #fff;
-  font-weight: bold;
-  transition: color 0.3s;
-}
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #ffcc70 !important;
+    }
 
-.navbar .navbar-brand:hover {
-  color: #ffd93d; /* amarillo */
-}
+    .nav-link {
+      font-weight: 500;
+      transition: color 0.3s;
+    }
 
-.btn-login {
-  background: #32cd32; /* verde limón */
-  color: #fff;
-  border-radius: 20px;
-  padding: 6px 16px;
-  transition: all 0.3s ease;
-}
+    .nav-link:hover {
+      color: #ffcc70 !important;
+    }
 
-.btn-login:hover {
-  background: #ffd93d;
-  color: #222;
-  transform: translateY(-2px);
-}
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 120px 20px;
+      background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(102, 16, 242, 0.7));
+      border-radius: 0 0 40px 40px;
+    }
 
-/* ----- Hero ----- */
-.hero {
-  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/crossword.png");
-  background-size: cover;
-  background-position: center;
-  color: #222;
-  padding: 100px 20px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
 
-.hero h1 {
-  font-size: 2.4rem;
-  font-weight: bold;
-  color: #ff4d4d;
-  animation: fadeDown 1s ease;
-}
+    .hero p {
+      font-size: 1.2rem;
+      color: #eee;
+    }
 
-.hero p {
-  font-size: 1.1rem;
-  color: #444;
-  animation: fadeUp 1.2s ease;
-}
+    /* Cursos estilo card */
+    .contenedor {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
 
-.btn-contacto {
-  background: #32cd32;
-  color: #fff;
-  border-radius: 25px;
-  padding: 10px 22px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
+    .curso {
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
+      border-radius: 18px;
+      padding: 25px;
+      margin: 20px 0;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #333;
+    }
 
-.btn-contacto:hover {
-  background: #ff4d4d;
-  color: #fff;
-  transform: scale(1.05);
-}
+    .curso:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
 
-/* ----- Sección Semanas ----- */
-#semanas h2 {
-  color: #32cd32;
-  font-weight: bold;
-}
+    .curso img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #74ebd5;
+    }
 
-.card {
-  border: none;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .curso-info h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #222;
+    }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-}
+    .curso-info p {
+      margin: 5px 0 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
 
-.card-title {
-  color: #ff4d4d;
-  font-weight: 600;
-}
+    .btn-custom {
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-.btn-semana {
-  background: #ffd93d;
-  color: #222;
-  border-radius: 20px;
-  padding: 8px 18px;
-  transition: all 0.3s;
-}
+    .btn-custom:hover {
+      background: linear-gradient(135deg, #5ed0c5, #8ba9e6);
+    }
 
-.btn-semana:hover {
-  background: #32cd32;
-  color: #fff;
-  transform: translateY(-2px);
-}
+    /* Footer elegante */
+    footer {
+      background: linear-gradient(135deg, #0d6efd, #6610f2);
+      color: #eee;
+      padding: 25px 0;
+      text-align: center;
+      margin-top: 30px;
+      border-radius: 40px 40px 0 0;
+    }
 
-/* ----- Footer ----- */
-footer {
-  background: #32cd32;
-  color: #fff;
-  font-size: 0.9rem;
-  margin-top: auto;
-}
-
-/* ----- Animaciones ----- */
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    footer p {
+      margin: 5px 0;
+    }

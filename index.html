@@ -3,88 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repositorio de Trabajos</title>
+  <title>Repositorio Universitario</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+ <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg px-3">
-    <a class="navbar-brand" href="#">
-      <i class="bi bi-journal-text"></i> Repositorio
-    </a>
-    <div class="ms-auto">
-      <a href="./login.html" class="btn btn-login">
-        <i class="bi bi-box-arrow-in-right"></i> Login
-      </a>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero text-center py-5">
-    <h1>Portafolio Universitario</h1>
-    <p class="lead text-muted">Este es mi portafolio personal universitario y mis logros que va estar en cambio</p>
-    <a href="./contacto.html" class="btn btn-contacto mt-3">
-      <i class="bi bi-envelope"></i> Contacto
-    </a>
-  </section>
-
-  <!-- Secciones de semanas -->
-  <div id="semanas" class="container py-5">
-    <h2 class="text-center mb-5">Listado de Semanas</h2>
-    <div class="row justify-content-center g-4">
-      <!-- Semana 1 -->
-      <div class="col-md-3">
-        <div class="card text-center p-3">
-          <div class="card-body">
-            <h5 class="card-title">Semana 1</h5>
-            <a href="./semana.html?semana=1" class="btn btn-semana">
-              Ver trabajos
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Semana 2 -->
-      <div class="col-md-3">
-        <div class="card text-center p-3">
-          <div class="card-body">
-            <h5 class="card-title">Semana 2</h5>
-            <a href="./semana.html?semana=2" class="btn btn-semana">
-              Ver trabajos
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Semana 3 -->
-      <div class="col-md-3">
-        <div class="card text-center p-3">
-          <div class="card-body">
-            <h5 class="card-title">Semana 3</h5>
-            <a href="./semana.html?semana=3" class="btn btn-semana">
-              Ver trabajos
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Semana 4 -->
-      <div class="col-md-3">
-        <div class="card text-center p-3">
-          <div class="card-body">
-            <h5 class="card-title">Semana 4</h5>
-            <a href="./semana.html?semana=4" class="btn btn-semana">
-              Ver trabajos
-            </a>
-          </div>
-        </div>
-      </div>
+<!-- 🔝 Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">📚 Repositorio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
+        <li class="nav-item"><a class="btn btn-success ms-2" href="/login.html">Login</a></li>
+      </ul>
     </div>
   </div>
+</nav>
 
-  <!-- Footer -->
-  <footer class="text-center py-3 mt-5">
-    © 2025 Steven - Repositorio académico
-  </footer>
+<!-- 🎯 Hero -->
+<section class="hero">
+  <h1>Bienvenido a mi Repositorio Universitario</h1>
+  <p>Un espacio donde organizo todos mis cursos y materiales académicos</p>
+</section>
+
+<!-- 📘 Lista de Cursos -->
+<section id="cursos" class="contenedor">
+  <h2 class="text-center mb-5 fw-bold text-light">Mis Cursos</h2>
+
+  <!-- Curso ejemplo -->
+  <div class="curso">
+    <img src="https://img.icons8.com/color/96/blueprint.png" alt="curso">
+    <div class="curso-info">
+      <h3>🏛️ Arquitectura de Software</h3>
+      <p>Diseño y principios fundamentales de arquitectura de software.</p>
+    </div>
+    <button class="btn-custom" onclick="location.href='./arquitectura.html?curso=arquitectura'">Ver archivos</button>
+  </div>
+
+  <div class="curso">
+    <img src="https://img.icons8.com/color/96/law.png" alt="curso">
+    <div class="curso-info">
+      <h3>⚖️ Legislación Informática</h3>
+      <p>Normas y leyes aplicadas al ámbito tecnológico.</p>
+    </div>
+    <button class="btn-custom" onclick="location.href='archivos.html?curso=legislacion'">Ver archivos</button>
+  </div>
+
+  <div class="curso">
+    <img src="https://img.icons8.com/color/96/usa.png" alt="curso">
+    <div class="curso-info">
+      <h3>🇺🇸 Inglés IV</h3>
+      <p>Material de inglés avanzado aplicado al entorno profesional.</p>
+    </div>
+    <button class="btn-custom" onclick="location.href='archivos.html?curso=ingles'">Ver archivos</button>
+  </div>
+
+  <div class="curso">
+  <img src="https://img.icons8.com/color/96/document.png" alt="curso">
+  <div class="curso-info">
+    <h3>📑 Taller de Investigación 1</h3>
+    <p>Documentos y avances en investigación académica.</p>
+  </div>
+  <button class="btn-custom" onclick="location.href='archivos.html?curso=investigacion'">Ver archivos</button>
+</div>
+
+  <div class="curso">
+    <img src="https://img.icons8.com/color/96/online-store.png" alt="curso">
+    <div class="curso-info">
+      <h3>🛒 Comercio Electrónico</h3>
+      <p>Estrategias y prácticas de comercio digital.</p>
+    </div>
+    <button class="btn-custom" onclick="location.href='archivos.html?curso=comercio'">Ver archivos</button>
+  </div>
+
+  <div class="curso">
+  <img src="https://img.icons8.com/color/96/organization.png" alt="curso">
+  <div class="curso-info">
+    <h3>🏛️ Gobierno de TI</h3>
+    <p>Gestión y control estratégico de tecnologías de información.</p>
+  </div>
+  <button class="btn-custom" onclick="location.href='archivos.html?curso=gobierno'">Ver archivos</button>
+</div>
+
+  <div class="curso">
+    <img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="curso">
+    <div class="curso-info">
+      <h3>🤖 Machine Learning (Electivo)</h3>
+      <p>Algoritmos de aprendizaje automático y aplicaciones.</p>
+    </div>
+    <button class="btn-custom" onclick="location.href='archivos.html?curso=ml'">Ver archivos</button>
+  </div>
+
+  <div class="curso">
+    <img src="https://img.icons8.com/color/96/cyber-security.png" alt="curso">
+    <div class="curso-info">
+      <h3>🔒 Seguridad de la Infraestructura de TI 1</h3>
+      <p>Protección y defensa de infraestructuras tecnológicas.</p>
+    </div>
+    <button class="btn-custom" onclick="location.href='archivos.html?curso=seguridad'">Ver archivos</button>
+  </div>
+</section>
+
+<!-- ✅ Footer -->
+<footer id="contacto">
+  <p>📧 Contacto: miemail@universidad.edu</p>
+  <p>© 2025 Steven – Repositorio Universitario</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

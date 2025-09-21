@@ -3,71 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Admin - Subir y Gestionar Archivos</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Panel Admin - Moderno</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Flowbite (componentes interactivos) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
   <link rel="stylesheet" href="css/upload.css">
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 
-<div class="container py-4">
-  <!-- 🔙 Botón volver -->
-  <div class="top-bar">
-    <a href="index.html" class="back-btn">← Volver</a>
+<div class="container mx-auto py-8 px-4">
+  <!-- Botón volver -->
+  <div class="mb-6">
+    <a href="index.html" class="inline-flex items-center px-4 py-2 bg-white border rounded-lg shadow hover:bg-gray-50 transition">
+      ← Volver
+    </a>
   </div>
 
-  <div class="row g-4">
-    
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
     <!-- Subir archivos -->
-    <div class="col-md-5">
-      <div class="card-custom">
-        <h3 class="mb-3"> Subir Trabajo Semanal</h3>
-        <form id="formUpload">
-          <div class="mb-3">
-            <label for="semana" class="form-label">Seleccionar semana</label>
-            <select id="semana" class="form-select" required>
-              <option value="Semana 1">Semana 1</option>
-              <option value="Semana 2">Semana 2</option>
-              <option value="Semana 3">Semana 3</option>
-              <option value="Semana 4">Semana 4</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="archivo" class="form-label">Subir archivo</label>
-            <input type="file" id="archivo" class="form-control" required>
-          </div>
-
-          <button type="submit" class="btn btn-custom w-100">Subir</button>
-        </form>
-        <p id="estado" class="mt-3"></p>
-      </div>
-    </div>
-
-    <!-- Lista de archivos -->
-    <div class="col-md-7">
-      <div class="card-custom">
-        <h3 class="mb-3"> listado de Archivos por semana</h3>
-        <div class="mb-3">
-          <label for="filtroSemana" class="form-label">Filtrar por semana</label>
-          <select id="filtroSemana" class="form-select">
-            <option value="Semana 1">Semana 1</option>
-            <option value="Semana 2">Semana 2</option>
-            <option value="Semana 3">Semana 3</option>
-            <option value="Semana 4">Semana 4</option>
+    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">📤 Subir Trabajo Semanal</h2>
+      <form id="formUpload" class="space-y-4">
+        <div>
+          <label for="curso" class="block text-sm font-medium text-gray-700">Seleccionar Curso</label>
+          <select id="curso" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <option value="arquitectura">Arquitectura de Software</option>
+            <option value="legislacion">Legislación Informática</option>
+            <option value="ingles">Inglés IV</option>
+            <option value="investigacion">Taller de Investigación 1</option>
+            <option value="comercio">Comercio Electrónico</option>
+            <option value="gobierno">Gobierno de TI</option>
+            <option value="ml">Machine Learning (Electivo)</option>
+            <option value="seguridad">Seguridad de la Infraestructura de TI 1</option>
           </select>
         </div>
-        <table class="table table-dark table-sm table-hover align-middle">
-          <thead>
+
+        <div>
+          <label for="semana" class="block text-sm font-medium text-gray-700">Seleccionar Semana</label>
+          <select id="semana" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <!-- Se generan semanas con JS -->
+          </select>
+        </div>
+
+        <div>
+          <label for="archivo" class="block text-sm font-medium text-gray-700">Archivo</label>
+          <input type="file" id="archivo" class="mt-1 block w-full text-gray-700 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-full shadow hover:bg-blue-700 transition font-medium">Subir</button>
+      </form>
+      <p id="estado" class="mt-3 text-gray-600 font-medium"></p>
+    </div>
+
+    <!-- Lista y previsualización -->
+    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition flex flex-col">
+      <h2 class="text-xl font-semibold text-green-600 mb-4">📂 Listado de Archivos</h2>
+
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label for="filtroCurso" class="block text-sm font-medium text-gray-700">Filtrar por Curso</label>
+          <select id="filtroCurso" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500">
+            <option value="arquitectura">Arquitectura de Software</option>
+            <option value="legislacion">Legislación Informática</option>
+            <option value="ingles">Inglés IV</option>
+            <option value="investigacion">Taller de Investigación 1</option>
+            <option value="comercio">Comercio Electrónico</option>
+            <option value="gobierno">Gobierno de TI</option>
+            <option value="ml">Machine Learning (Electivo)</option>
+            <option value="seguridad">Seguridad de la Infraestructura de TI 1</option>
+          </select>
+        </div>
+        <div>
+          <label for="filtroSemana" class="block text-sm font-medium text-gray-700">Filtrar por Semana</label>
+          <select id="filtroSemana" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500">
+            <!-- Se generan semanas con JS -->
+          </select>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg overflow-hidden">
+          <thead class="bg-gray-50">
             <tr>
-              <th>Archivo</th>
-              <th>Fecha</th>
-              <th>Acción</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Archivo</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Curso</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Semana</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Fecha</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Acciones</th>
             </tr>
           </thead>
-          <tbody id="listaArchivos">
-            <!-- Aquí se listan los archivos -->
+          <tbody id="listaArchivos" class="bg-white divide-y divide-gray-200">
+            <tr><td colspan="5" class="text-center text-gray-400 py-4">Selecciona un curso y semana</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="mt-4">
+        <h3 class="font-medium text-gray-800 mb-2">👀 Previsualización</h3>
+        <div id="preview" class="bg-gray-50 rounded-lg p-3 h-64 overflow-auto border border-gray-200">
+          <p class="text-gray-400">Selecciona un archivo para previsualizar.</p>
+        </div>
       </div>
     </div>
 

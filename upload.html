@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Admin - Moderno</title>
+  <title>Panel Admin </title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Flowbite (componentes interactivos) -->
+  <!-- Flowbite -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
   <link rel="stylesheet" href="css/upload.css">
+<link rel="icon" type="image/png" href="/img/icon.png">
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -112,6 +113,140 @@
   </div>
 </div>
 
-<script type="module" src="js/upload.js"></script>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const form = document.getElementById("formUpload");
+const estado = document.getElementById("estado");
+const listaArchivos = document.getElementById("listaArchivos");
+const semanaSelect = document.getElementById("semana");
+const filtroSemana = document.getElementById("filtroSemana");
+const preview = document.getElementById("preview");
+
+// Generar semanas
+for (let i = 1; i <= 16; i++) {
+  const option1 = document.createElement("option");
+  option1.value = `Semana_${i}`;
+  option1.textContent = `Semana ${i}`;
+  semanaSelect.appendChild(option1);
+
+  const option2 = document.createElement("option");
+  option2.value = `Semana_${i}`;
+  option2.textContent = `Semana ${i}`;
+  filtroSemana.appendChild(option2);
+}
+
+function normalizar(nombre) {
+  return nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_.-]/g, "");
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const archivo = document.getElementById("archivo").files[0];
+  const curso = document.getElementById("curso").value.trim();
+  const semana = semanaSelect.value;
+
+  if (!archivo || !curso) {
+    estado.textContent = "⚠️ Selecciona un archivo y escribe el curso.";
+    estado.style.color = "yellow";
+    return;
+  }
+
+  estado.textContent = "⏳ Subiendo...";
+  estado.style.color = "orange";
+
+  const filePath = `${semana}/${Date.now()}_${normalizar(archivo.name)}`;
+  const { error } = await supabase.storage.from("hola").upload(filePath, archivo);
+
+  if (error) {
+    estado.textContent = "❌ Error al subir: " + error.message;
+    estado.style.color = "red";
+    return;
+  }
+
+  estado.textContent = "✅ Archivo subido correctamente.";
+  estado.style.color = "lime";
+  form.reset();
+
+  if (filtroSemana.value === semana) {
+    agregarFilaArchivo(archivo.name, curso, semana, filePath);
+  }
+});
+
+function agregarFilaArchivo(nombreArchivo, curso, semana, filePath) {
+  const { data: urlData } = supabase.storage.from("hola").getPublicUrl(filePath);
+  const publicUrl = urlData.publicUrl;
+
+  const timestamp = parseInt(filePath.split("/")[1].split("_")[0]);
+  const fecha = new Date(timestamp).toLocaleString();
+
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${nombreArchivo}</td>
+    <td>${curso}</td>
+    <td>${semana}</td>
+    <td>${fecha}</td>
+    <td class="flex justify-start items-center gap-3">
+      <button class="ver-btn">👁️ Ver</button>
+      <a href="${publicUrl}" download class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">⬇️ Descargar</a>
+      <button class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">🗑️ Borrar</button>
+    </td>
+  `;
+
+  row.querySelector(".ver-btn").addEventListener("click", () => verArchivo(publicUrl));
+  row.querySelector("button.bg-red-500").addEventListener("click", async () => {
+    if (!confirm("¿Seguro que deseas borrar este archivo?")) return;
+    const { error } = await supabase.storage.from("hola").remove([filePath]);
+    if (error) alert("❌ Error al borrar: " + error.message);
+    else row.remove();
+  });
+
+  listaArchivos.appendChild(row);
+}
+
+async function listarArchivos(semana) {
+  listaArchivos.innerHTML = `<tr><td colspan="5" class="text-center text-info">⏳ Cargando...</td></tr>`;
+  preview.innerHTML = `<p class="text-muted">Selecciona un archivo para previsualizar.</p>`;
+
+  try {
+    const { data, error } = await supabase.storage.from("hola").list(semana, { limit: 100 });
+    if (error) {
+      listaArchivos.innerHTML = `<tr><td colspan="5" class="text-danger">❌ Error: ${error.message}</td></tr>`;
+      return;
+    }
+    if (!data || data.length === 0) {
+      listaArchivos.innerHTML = `<tr><td colspan="5" class="text-muted">📭 No hay archivos en esta semana</td></tr>`;
+      return;
+    }
+
+    listaArchivos.innerHTML = "";
+    for (const file of data) {
+      agregarFilaArchivo(file.name, "Nombre del curso", semana, `${semana}/${file.name}`);
+    }
+  } catch (err) {
+    listaArchivos.innerHTML = `<tr><td colspan="5" class="text-danger">⚠️ Error inesperado: ${err.message}</td></tr>`;
+  }
+}
+
+window.verArchivo = (url) => {
+  const ext = url.split(".").pop().toLowerCase();
+  if (["jpg","jpeg","png","gif","webp"].includes(ext)) {
+    preview.innerHTML = `<img src="${url}" class="img-fluid">`;
+  } else if (ext === "pdf") {
+    preview.innerHTML = `<iframe src="${url}" width="100%" height="300px"></iframe>`;
+  } else {
+    preview.innerHTML = `<p>No se puede previsualizar este archivo.<br><a href="${url}" target="_blank">Abrir aquí</a></p>`;
+  }
+};
+
+filtroSemana.addEventListener("change", () => listarArchivos(filtroSemana.value));
+listarArchivos(filtroSemana.value);
+</script>
+
 </body>
 </html>

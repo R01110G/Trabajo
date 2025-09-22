@@ -1,17 +1,18 @@
 /* ----- Paleta ----- */
-/* Rojo - Amarillo - Verde Limón */
+/* Azul Claro - Azul Medio - Azul Oscuro */
 :root {
-  --rojo: #ff4d4d;
-  --amarillo: #ffd93d;
-  --verde-limon: #32cd32;
+  --azul-claro: #60a5fa;   /* azul cielo */
+  --azul-medio: #3b82f6;   /* azul principal */
+  --azul-oscuro: #1e3a8a;  /* azul profundo */
   --blanco: #ffffff;
   --gris-suave: #f9f9f9;
   --sombra: rgba(0, 0, 0, 0.15);
+  --negro: #000000;
 }
 
 /* ----- Base ----- */
 body {
-  background: linear-gradient(135deg, var(--rojo), var(--amarillo), var(--verde-limon));
+  background: linear-gradient(135deg, var(--azul-claro), var(--azul-medio), var(--azul-oscuro));
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
@@ -41,7 +42,7 @@ body {
 
 /* ----- Título ----- */
 h2 {
-  color: var(--rojo);
+  color: var(--azul-oscuro);
   margin-bottom: 25px;
   font-weight: bold;
   font-size: 1.8rem;
@@ -57,19 +58,20 @@ input {
   border-radius: 10px;
   outline: none;
   font-size: 1rem;
+  color: var(--negro); /* texto negro */
   transition: all 0.3s ease;
 }
 
 input:focus {
-  border-color: var(--verde-limon);
-  box-shadow: 0 0 10px rgba(50, 205, 50, 0.4);
+  border-color: var(--azul-medio);
+  box-shadow: 0 0 10px rgba(59,130,246,0.4);
 }
 
 /* ----- Botón Ingresar ----- */
 button {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(90deg, var(--verde-limon), var(--amarillo));
+  background: linear-gradient(90deg, var(--azul-claro), var(--azul-medio));
   border: none;
   border-radius: 10px;
   font-weight: bold;
@@ -82,14 +84,14 @@ button {
 }
 
 button:hover {
-  background: linear-gradient(90deg, var(--rojo), var(--amarillo));
+  background: linear-gradient(90deg, var(--azul-oscuro), var(--azul-medio));
   transform: scale(1.05);
 }
 
 /* ----- Error ----- */
 .error-message {
   margin-top: 15px;
-  color: var(--rojo);
+  color: var(--azul-oscuro);
   font-weight: bold;
   display: none;
   font-size: 0.95rem;
@@ -100,8 +102,8 @@ button:hover {
   margin-top: 25px;
   display: inline-block;
   padding: 10px 24px;
-  color: var(--verde-limon);
-  border: 2px solid var(--verde-limon);
+  color: var(--azul-medio);
+  border: 2px solid var(--azul-medio);
   border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
@@ -109,7 +111,7 @@ button:hover {
 }
 
 .back-btn:hover {
-  background: var(--verde-limon);
+  background: var(--azul-medio);
   color: var(--blanco);
   box-shadow: 0 5px 12px var(--sombra);
 }

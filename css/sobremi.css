@@ -1,0 +1,97 @@
+
+:root {
+    --color-primario: #1e3a8a;     /* Azul oscuro */
+    --color-secundario: #3b82f6;   /* Azul principal */
+    --color-claro: #93c5fd;        /* Azul claro */
+    --color-fondo: #e0f2fe;        /* Azul muy suave para fondo */
+    --color-borde: #60a5fa;        /* Azul para bordes */
+    --color-texto: #1e293b;        /* Azul grisáceo para texto */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--color-fondo), #dbeafe);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sobre-mi-container {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    max-width: 900px;
+    width: 90%;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.sobre-mi-container img {
+    width: 200px;
+    height: 600px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primario);
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+
+.info-content {
+    flex: 1;
+    min-width: 250px;
+}
+
+.info-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primario);
+    margin-bottom: 10px;
+}
+
+.info-content h3 {
+    font-weight: 500;
+    color: var(--color-texto);
+    margin-bottom: 20px;
+}
+
+.info-box {
+    background: var(--color-fondo);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: var(--color-texto);
+}
+
+.info-box strong {
+    color: var(--color-secundario);
+}
+
+.turing-frase {
+    font-style: italic;
+    color: var(--color-texto);
+    background: var(--color-claro);
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 4px solid var(--color-secundario);
+}
+
+.btn-volver {
+    background: transparent;
+    border: 2px solid var(--color-secundario);
+    color: var(--color-secundario);
+    border-radius: 8px;
+    padding: 8px 18px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background: var(--color-secundario);
+    color: #fff;
+}

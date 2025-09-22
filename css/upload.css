@@ -2,10 +2,11 @@
 
 /* Fondo general */
 body {
-  /* Gradiente diagonal moderno */
-  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  /* Gradiente diagonal azul moderno */
+  background: linear-gradient(135deg, #e0f2fe, #93c5fd);
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
+  color: #1e3a8a;
 }
 
 /* Cards personalizados */
@@ -25,11 +26,16 @@ body {
 /* Botones modernos */
 button, .btn {
   border-radius: 9999px;
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: #fff;
+  border: none;
+  cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
 button:hover, .btn:hover {
   transform: scale(1.05);
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
 }
 
 /* Tabla con sombra suave */
@@ -37,6 +43,7 @@ table {
   border-radius: 0.75rem;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background-color: #ffffffdd;
 }
 
 /* Previsualización */
@@ -52,9 +59,37 @@ select {
   border-radius: 0.75rem;
   padding: 0.5rem;
   transition: all 0.2s;
+  border: 2px solid #93c5fd;
+  background-color: #ffffffee;
+  color: #1e3a8a;
 }
 
 select:focus {
   outline: none;
   box-shadow: 0 0 0 2px #3b82f6; /* azul moderno */
 }
+
+/* Botones grandes y animados */
+.btn-anim {
+  font-size: 1.2rem;         /* Más grandes */
+  padding: 12px 22px;
+  border-radius: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-anim:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Botón Ver flotante/destacado */
+    .ver-btn {
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 8px 20px rgba(0, 128, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+    .ver-btn:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(0, 128, 0, 0.7);
+    }

@@ -47,7 +47,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
-const SUPABASE_ANON_KEY = "TU_ANON_KEY_AQUI";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function normalizar(nombre) {

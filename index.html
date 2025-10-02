@@ -5,28 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repositorio Universitario</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
- <link rel="stylesheet" href="css/styles.css">
- <!-- Favicon PNG -->
-<link rel="icon" type="image/png" href="img/icon.png">
-
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="img/icon.png">
 </head>
 <body>
 
 <!-- 🔝 Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
   <div class="container">
-    <!-- Logo + Nombre -->
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="img/nuevo.PNG" alt="UPLA Logo" width="40" height="40" class="me-2">
       Steven Peña Sánchez
     </a>
 
-    <!-- Botón de menú responsive -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú -->
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
@@ -38,7 +33,6 @@
     </div>
   </div>
 </nav>
-
 
 <!-- 🎯 Hero -->
 <section class="hero text-center bg-gradient-to-r from-blue-200 to-indigo-300 py-16 px-4 rounded-xl shadow-lg">
@@ -53,84 +47,9 @@
   <p class="text-lg text-gray-700 font-medium">¡Explora, aprende y potencia tu aprendizaje! 🌱</p>
 </section>
 
-
-
-<!-- 📘 Lista de Cursos -->
-<section id="cursos" class="contenedor">
-  <h2 class="text-center mb-5 fw-bold text-light">Mis Cursos</h2>
-
-  <!-- Curso ejemplo -->
-  <div class="curso">
-    <img src="https://img.icons8.com/color/96/blueprint.png" alt="curso">
-    <div class="curso-info">
-      <h3>🏛️ Arquitectura de Software</h3>
-      <p>Diseño y principios fundamentales de arquitectura de software.</p>
-    </div>
-    <button class="btn-custom" onclick="location.href='cursos/arqui.html?curso=arquitectura'">Ver archivos</button>
-  </div>
-
-  <div class="curso">
-    <img src="https://img.icons8.com/color/96/law.png" alt="curso">
-    <div class="curso-info">
-      <h3>⚖️ Legislación Informática</h3>
-      <p>Normas y leyes aplicadas al ámbito tecnológico.</p>
-    </div>
-    <button class="btn-custom" onclick="location.href='cursos/legislacion.html?curso=legislacion'">Ver archivos</button>
-  </div>
-
-  <div class="curso">
-    <img src="https://img.icons8.com/color/96/usa.png" alt="curso">
-    <div class="curso-info">
-      <h3>Inglés IV</h3>
-      <p>Material de inglés avanzado aplicado al entorno profesional.</p>
-    </div>
-    <button class="btn-custom" onclick="location.href='cursos/inglesvi.html?curso=ingles'">Ver archivos</button>
-  </div>
-
-  <div class="curso">
-  <img src="https://img.icons8.com/color/96/document.png" alt="curso">
-  <div class="curso-info">
-    <h3>📑 Taller de Investigación 1</h3>
-    <p>Documentos y avances en investigación académica.</p>
-  </div>
-  <button class="btn-custom" onclick="location.href='cursos/tesis.html?curso=investigacion'">Ver archivos</button>
-</div>
-
-  <div class="curso">
-    <img src="https://img.icons8.com/color/96/online-store.png" alt="curso">
-    <div class="curso-info">
-      <h3>🛒 Comercio Electrónico</h3>
-      <p>Estrategias y prácticas de comercio digital.</p>
-    </div>
-    <button class="btn-custom" onclick="location.href='cursos/comercio.html?curso=comercio'">Ver archivos</button>
-  </div>
-
-  <div class="curso">
-  <img src="https://img.icons8.com/color/96/organization.png" alt="curso">
-  <div class="curso-info">
-    <h3>🏛️ Gobierno de TI</h3>
-    <p>Gestión y control estratégico de tecnologías de información.</p>
-  </div>
-  <button class="btn-custom" onclick="location.href='cursos/gobiernoti.html?curso=gobierno'">Ver archivos</button>
-</div>
-
-  <div class="curso">
-    <img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="curso">
-    <div class="curso-info">
-      <h3>🤖 Machine Learning (Electivo)</h3>
-      <p>Algoritmos de aprendizaje automático y aplicaciones.</p>
-    </div>
-    <button class="btn-custom" onclick="location.href='cursos/marchine.html?curso=ml'">Ver archivos</button>
-  </div>
-
-  <div class="curso">
-    <img src="https://img.icons8.com/color/96/cyber-security.png" alt="curso">
-    <div class="curso-info">
-      <h3>🔒 Seguridad de la Infraestructura de TI 1</h3>
-      <p>Protección y defensa de infraestructuras tecnológicas.</p>
-    </div>
-    <button class="btn-custom" onclick="location.href='cursos/seguridad.html?curso=seguridad'">Ver archivos</button>
-  </div>
+<!-- 📘 Lista de Cursos con React -->
+<section id="cursos">
+  <div id="root"></div>
 </section>
 
 <!-- ✅ Footer -->
@@ -139,6 +58,48 @@
   <p>© 2025 Steven – Repositorio Universitario</p>
 </footer>
 
+<!-- Scripts Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- React y Babel -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- App React -->
+<script type="text/babel">
+  const cursos = [
+    { img: "https://img.icons8.com/color/96/blueprint.png", nombre: "🏛️ Arquitectura de Software", desc: "Diseño y principios fundamentales de arquitectura de software.", link: "cursos/arqui.html?curso=arquitectura" },
+    { img: "https://img.icons8.com/color/96/law.png", nombre: "⚖️ Legislación Informática", desc: "Normas y leyes aplicadas al ámbito tecnológico.", link: "cursos/legislacion.html?curso=legislacion" },
+    { img: "https://img.icons8.com/color/96/usa.png", nombre: "Inglés IV", desc: "Material de inglés avanzado aplicado al entorno profesional.", link: "cursos/inglesvi.html?curso=ingles" },
+    { img: "https://img.icons8.com/color/96/document.png", nombre: "📑 Taller de Investigación 1", desc: "Documentos y avances en investigación académica.", link: "cursos/tesis.html?curso=investigacion" },
+    { img: "https://img.icons8.com/color/96/online-store.png", nombre: "🛒 Comercio Electrónico", desc: "Estrategias y prácticas de comercio digital.", link: "cursos/comercio.html?curso=comercio" },
+    { img: "https://img.icons8.com/color/96/organization.png", nombre: "🏛️ Gobierno de TI", desc: "Gestión y control estratégico de tecnologías de información.", link: "cursos/gobiernoti.html?curso=gobierno" },
+    { img: "https://img.icons8.com/color/96/artificial-intelligence.png", nombre: "🤖 Machine Learning (Electivo)", desc: "Algoritmos de aprendizaje automático y aplicaciones.", link: "cursos/marchine.html?curso=ml" },
+    { img: "https://img.icons8.com/color/96/cyber-security.png", nombre: "🔒 Seguridad de la Infraestructura de TI 1", desc: "Protección y defensa de infraestructuras tecnológicas.", link: "cursos/seguridad.html?curso=seguridad" }
+  ];
+
+  function App() {
+    return (
+      <div className="contenedor">
+        <h2 className="text-center mb-5 fw-bold text-light">Mis Cursos</h2>
+        {cursos.map((curso, i) => (
+          <div key={i} className="curso">
+            <img src={curso.img} alt="curso"/>
+            <div className="curso-info">
+              <h3>{curso.nombre}</h3>
+              <p>{curso.desc}</p>
+            </div>
+            <button className="btn-custom" onClick={() => window.location.href = curso.link}>Ver archivos</button>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<App />);
+</script>
+
 </body>
 </html>

@@ -10,7 +10,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
   <link rel="stylesheet" href="css/upload.css">
-<link rel="icon" type="image/png" href="img/icon.png">
+  <link rel="icon" type="image/png" href="img/icon.png">
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -153,7 +153,8 @@ form.addEventListener("submit", async (e) => {
   estado.textContent = "⏳ Subiendo...";
   estado.style.color = "orange";
 
-  const filePath = `${semana}/${Date.now()}_${normalizar(archivo.name)}`;
+  const fecha = new Date().toISOString().split('T')[0]; // yyyy-mm-dd
+  const filePath = `${semana}/${fecha}_${archivo.name}`;
   const { error } = await supabase.storage.from("hola").upload(filePath, archivo);
 
   if (error) {
@@ -184,20 +185,57 @@ function agregarFilaArchivo(nombreArchivo, curso, semana, filePath) {
     <td>${curso}</td>
     <td>${semana}</td>
     <td>${fecha}</td>
-    <td class="flex justify-start items-center gap-3">
-      <button class="ver-btn">👁️ Ver</button>
-      <a href="${publicUrl}" download class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">⬇️ Descargar</a>
-      <button class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">🗑️ Borrar</button>
+    <td class="flex justify-start items-center gap-2 flex-wrap">
+      <button class="ver-btn bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">👁️ Ver</button>
+      <a href="${publicUrl}" download class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition">⬇️ Descargar</a>
+      <button class="mod-btn bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">✏️ Modificar</button>
+      <button class="del-btn bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition">🗑️ Borrar</button>
     </td>
   `;
 
+  // Ver archivo
   row.querySelector(".ver-btn").addEventListener("click", () => verArchivo(publicUrl));
-  row.querySelector("button.bg-red-500").addEventListener("click", async () => {
+
+  // Borrar archivo
+  row.querySelector(".del-btn").addEventListener("click", async () => {
     if (!confirm("¿Seguro que deseas borrar este archivo?")) return;
     const { error } = await supabase.storage.from("hola").remove([filePath]);
     if (error) alert("❌ Error al borrar: " + error.message);
     else row.remove();
   });
+
+  // Modificar archivo (renombrar y mover a otra semana)
+row.querySelector(".mod-btn").addEventListener("click", async () => {
+  const nuevoNombre = prompt("Escribe el nuevo nombre del archivo:", nombreArchivo);
+  if (!nuevoNombre) return;
+
+  const nuevaSemana = prompt("¿A qué semana quieres mover el archivo? (ej: Semana_1, Semana_2)", semana);
+  if (!nuevaSemana) return;
+
+  // Descargar original
+  const { data: fileData, error: downloadError } = await supabase.storage.from("hola").download(filePath);
+  if (downloadError) {
+    alert("❌ Error al obtener archivo: " + downloadError.message);
+    return;
+  }
+
+  // Subir con nuevo nombre en la nueva semana
+  const nuevoPath = `${nuevaSemana}/${Date.now()}_${normalizar(nuevoNombre)}`;
+  const { error: uploadError } = await supabase.storage.from("hola").upload(nuevoPath, fileData);
+  if (uploadError) {
+    alert("❌ Error al subir nuevo archivo: " + uploadError.message);
+    return;
+  }
+
+  // Borrar original
+  await supabase.storage.from("hola").remove([filePath]);
+
+  // Refrescar tabla de la semana actual
+  listarArchivos(semana);
+
+  alert(`✅ Archivo movido a ${nuevaSemana} y renombrado como ${nuevoNombre}`);
+});
+
 
   listaArchivos.appendChild(row);
 }
@@ -238,22 +276,14 @@ window.verArchivo = (url) => {
     contenido = `<iframe src="${url}" width="100%" height="500px" frameborder="0"></iframe>`;
 
   } else if (["ppt", "pptx"].includes(ext)) {
-    // 👉 Google Docs Viewer
     contenido = `
       <iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" 
               width="100%" height="500px" frameborder="0"></iframe>`;
-    // 👉 Alternativa Office (descomenta si prefieres)
-    /*
-    contenido = `
-      <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}" 
-              width="100%" height="500px" frameborder="0"></iframe>`;
-    */
   } else {
     contenido = `<p>No se puede previsualizar este archivo.<br>
       <a href="${url}" target="_blank" class="text-blue-600 underline">Abrir aquí</a></p>`;
   }
 
-  // Insertar en el modal
   preview.innerHTML = contenido;
   document.getElementById("previewModal").classList.remove("hidden");
 };
@@ -264,10 +294,10 @@ window.cerrarModal = () => {
   preview.innerHTML = `<p class="text-gray-400">Selecciona un archivo para previsualizar.</p>`;
 };
 
-
 filtroSemana.addEventListener("change", () => listarArchivos(filtroSemana.value));
 listarArchivos(filtroSemana.value);
 </script>
+
 <!-- Modal flotante para previsualización -->
 <div id="previewModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
   <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-2/3 max-h-[90vh] flex flex-col">

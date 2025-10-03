@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Usuarios - Google Auth</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Panel de Administración - Registrar Usuarios</h2>
+
+    <div class="card shadow p-4 text-center">
+      <p>Puedes registrar usuarios manualmente o con Google:</p>
+
+      <!-- Botón Google -->
+      <button id="btnGoogle" class="btn btn-danger w-100 mb-3">
+        <img src="https://img.icons8.com/color/24/google-logo.png" class="me-2" alt="Google"/>
+        Registrar con Google
+      </button>
+
+      <!-- Formulario manual -->
+      <form id="formRegistrar">
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo del usuario</label>
+          <input type="email" class="form-control" id="correo" placeholder="ejemplo@correo.com" required>
+        </div>
+
+        
+
+        <div class="mb-3">
+          <label for="rol" class="form-label">Rol</label>
+          <select class="form-control" id="rol" required>
+            <option value="user">Usuario</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Registrar Manualmente</button>
+      </form>
+
+      <div id="mensaje" class="mt-3"></div>
+    </div>
+  </div>
+
+  <script>
+    // Configuración Supabase
+    const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // 🔹 Login/Registro con Google
+    document.getElementById("btnGoogle").addEventListener("click", async () => {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/admin/usuarios.html" // redirige aquí tras login
+        }
+      });
+      if (error) {
+        document.getElementById("mensaje").innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+      }
+    });
+
+    // 🔹 Guardar manual
+    document.getElementById("formRegistrar").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const correo = document.getElementById("correo").value;
+      const rol = document.getElementById("rol").value;
+
+      try {
+        const res = await fetch("http://localhost:4000/api/registrar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ correo, rol })
+        });
+
+        const data = await res.json();
+        const mensaje = document.getElementById("mensaje");
+
+        if (res.ok) {
+          mensaje.innerHTML = `<div class="alert alert-success">${data.mensaje}</div>`;
+          document.getElementById("formRegistrar").reset();
+        } else {
+          mensaje.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+        }
+      } catch (err) {
+        document.getElementById("mensaje").innerHTML = `<div class="alert alert-danger">Error de conexión con el servidor</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

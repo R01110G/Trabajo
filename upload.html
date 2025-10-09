@@ -314,5 +314,26 @@ listarArchivos(filtroSemana.value);
     </div>
   </div>
 </div>
+
+<!--solo usar para proteger el upload-->
+<!-- <script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  const supabase = createClient("https://bkmrymsbcnqrxltsmxxm.supabase.co", "eyJh...");
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) window.location.href = "login.html";
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  if (profile.role !== "admin") {
+    alert("Acceso restringido. Solo administradores.");
+    window.location.href = "index.html";
+  }
+</script> -->
+
 </body>
 </html>

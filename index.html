@@ -28,7 +28,11 @@
         <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
         <li class="nav-item"><a class="nav-link" href="">Ciclos</a></li>
         <li class="nav-item"><a class="nav-link" href="sobremi.html">Sobre Mi</a></li>
-        <li class="nav-item"><a class="btn btn-success ms-2" href="login.html">Administrador</a></li>
+        <li class="nav-item"><a class="nav-link" href="upload.html">Panel Admin</a></li>
+        <!-- 🔹 Botón dinámico -->
+        <li class="nav-item">
+          <button id="adminBtn" class="btn btn-success ms-2">Iniciar Sesión</button>
+        </li>
       </ul>
     </div>
   </div>
@@ -65,6 +69,66 @@
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Supabase -->
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const adminBtn = document.getElementById("adminBtn");
+
+  async function checkUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      // ✅ Usuario autenticado
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+      if (error) {
+        console.error("Error obteniendo perfil:", error.message);
+      }
+
+      adminBtn.textContent = "Cerrar sesión";
+      adminBtn.classList.replace("btn-success", "btn-danger");
+
+      adminBtn.onclick = async () => {
+        await supabase.auth.signOut();
+        location.reload();
+      };
+
+      // 🔒 Control de acceso al panel admin
+      const panelLink = document.querySelector('a[href="upload.html"]');
+      if (profile?.role !== "admin") {
+        // ❌ Ocultar o deshabilitar acceso
+        panelLink.style.display = "none";
+      } else {
+        // ✅ Mostrar si es admin
+        panelLink.style.display = "inline-block";
+      }
+
+    } else {
+      // 🚪 Usuario no autenticado
+      adminBtn.textContent = "Iniciar Sesión";
+      adminBtn.classList.replace("btn-danger", "btn-success");
+      adminBtn.onclick = () => window.location.href = "login.html";
+
+      // Ocultar acceso al panel admin
+      const panelLink = document.querySelector('a[href="upload.html"]');
+      panelLink.style.display = "none";
+    }
+  }
+
+  checkUser();
+</script>
+
 
 <!-- App React -->
 <script type="text/babel">

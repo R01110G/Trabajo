@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procesando Google Login</title>
+</head>
+<body>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const supabase = createClient(
+  "https://bkmrymsbcnqrxltsmxxm.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as"
+);
+
+const redirectAdmin = "panel.html";
+
+window.onload = async () => {
+  const { data: { session }, error } = await supabase.auth.getSession();
+
+  if (error || !session?.user) {
+    alert("No se pudo obtener la sesión de Google");
+    window.location.href = "loginadmin.html"; // Volver al login
+    return;
+  }
+
+  const user = session.user;
+
+  // Crear perfil como admin si no existe
+  const { data: existingProfile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (!existingProfile) {
+    await supabase.from("profiles").insert([{
+      id: user.id,
+      email: user.email,
+      role: "admin",
+      created_at: new Date().toISOString(),
+    }]);
+  }
+
+  // Redirigir al panel
+  window.location.href = redirectAdmin;
+};
+</script>
+</body>
+</html>

@@ -105,14 +105,7 @@
       };
 
       // 🔒 Control de acceso al panel admin
-      const panelLink = document.querySelector('a[href="upload.html"]');
-      if (profile?.role !== "admin") {
-        // ❌ Ocultar o deshabilitar acceso
-        panelLink.style.display = "none";
-      } else {
-        // ✅ Mostrar si es admin
-        panelLink.style.display = "inline-block";
-      }
+
 
     } else {
       // 🚪 Usuario no autenticado

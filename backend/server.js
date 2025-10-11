@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import { createClient } from "@supabase/supabase-js";
 
 const app = express();
@@ -13,9 +15,25 @@ const SUPABASE_ANON_KEY =
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-//
-// 🔹 Ruta para listar archivos del bucket "hola"
-//
+// 🔹 Para usar __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 🔹 Servir toda la raíz del proyecto como estática
+app.use(express.static(path.join(__dirname, "../")));
+
+// 🔹 Servir carpetas específicas (opcional, pero asegura subcarpetas)
+const carpetas = ["js", "img", "css", "cursos", "cursoscss", "admin", "admincss"];
+carpetas.forEach((carpeta) => {
+  app.use(`/${carpeta}`, express.static(path.join(__dirname, `../${carpeta}`)));
+});
+
+// 🔹 Servir index.html por defecto en "/"
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
+
+// 🔹 Rutas API
 app.get("/api/archivos", async (req, res) => {
   const { data, error } = await supabase.storage.from("hola").list("", {
     limit: 100,
@@ -32,9 +50,6 @@ app.get("/api/archivos", async (req, res) => {
   res.json(archivos);
 });
 
-//
-// 🔹 Ruta para registrar usuario en tabla "usuarios"
-//
 app.post("/api/registrar", async (req, res) => {
   const { correo, rol } = req.body;
 
@@ -51,19 +66,15 @@ app.post("/api/registrar", async (req, res) => {
   }
 });
 
-//
-// 🔹 Ruta para registrar usuario con correo + contraseña (Supabase Auth)
-//
 app.post("/api/registrar-auth", async (req, res) => {
   const { correo, password, rol } = req.body;
 
   try {
-    // Crear usuario en Supabase Auth
     const { data, error } = await supabase.auth.admin.createUser({
       email: correo,
       password: password,
-      email_confirm: true, // confirmación automática
-      user_metadata: { rol }, // guardar rol en metadata
+      email_confirm: true,
+      user_metadata: { rol },
     });
 
     if (error) throw error;
@@ -74,9 +85,7 @@ app.post("/api/registrar-auth", async (req, res) => {
   }
 });
 
-//
 // 🔹 Puerto del servidor
-//
 app.listen(4000, () => {
   console.log("Servidor backend corriendo en http://localhost:4000");
 });

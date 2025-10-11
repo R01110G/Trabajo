@@ -4,24 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Admin </title>
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Flowbite -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-  <link rel="stylesheet" href="css/upload.css">
+    <link rel="stylesheet" href="../admincss/archivos.css">
   <link rel="icon" type="image/png" href="../img/icon.png">
+  <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="bg-gray-100 font-sans">
-
+  <!-- 🔹 NAVBAR SUPERIOR -->
+  <nav class="bg-blue-700 text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <h1 class="text-xl font-bold">⚙️ Panel de Administración</h1>
+    <ul class="flex gap-6 text-sm font-medium">
+      <li><a href="panel.html" class="hover:text-gray-200 border-b-2 border-transparent hover:border-white">Usuarios</a></li>
+      <li><a href="archivos.html" class="hover:text-gray-200 border-b-2 border-transparent hover:border-white">Archivos</a></li>
+      <li><button id="cerrarSesion" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">Cerrar Sesión</button></li>
+    </ul>
+  </nav>
+  
 <div class="container mx-auto py-8 px-4">
-  <!-- Botón volver -->
-  <div class="mb-6">
-    <a href="panel.html" class="inline-flex items-center px-4 py-2 bg-white border rounded-lg shadow hover:bg-gray-50 transition">
-      ← Volver
-    </a>
-  </div>
-
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
     <!-- Subir archivos -->
@@ -180,18 +184,18 @@ function agregarFilaArchivo(nombreArchivo, curso, semana, filePath) {
   const fecha = new Date(timestamp).toLocaleString();
 
   const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${nombreArchivo}</td>
-    <td>${curso}</td>
-    <td>${semana}</td>
-    <td>${fecha}</td>
-    <td class="flex justify-start items-center gap-2 flex-wrap">
-      <button class="ver-btn bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">👁️ Ver</button>
-      <a href="${publicUrl}" download class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition">⬇️ Descargar</a>
-      <button class="mod-btn bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">✏️ Modificar</button>
-      <button class="del-btn bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition">🗑️ Borrar</button>
-    </td>
-  `;
+row.innerHTML = `
+  <td>${nombreArchivo}</td>
+  <td>${curso}</td>
+  <td>${semana}</td>
+  <td>${fecha}</td>
+  <td class="flex justify-start items-center gap-2 flex-wrap">
+    <button class="ver-btn w-28 text-sm font-medium bg-gray-400 text-white py-2 rounded hover:bg-gray-500 transition">👁️ Ver</button>
+    <a href="${publicUrl}" download class="w-28 text-center text-sm font-medium bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">⬇️ Descargar</a>
+    <button class="mod-btn w-28 text-sm font-medium bg-yellow-400 text-black py-2 rounded hover:bg-yellow-500 transition">✏️ Modificar</button>
+    <button class="del-btn w-28 text-sm font-medium bg-red-600 text-white py-2 rounded hover:bg-red-700 transition">🗑️ Borrar</button>
+  </td>
+`;
 
   // Ver archivo
   row.querySelector(".ver-btn").addEventListener("click", () => verArchivo(publicUrl));
@@ -206,11 +210,23 @@ function agregarFilaArchivo(nombreArchivo, curso, semana, filePath) {
 
   // Modificar archivo (renombrar y mover a otra semana)
 row.querySelector(".mod-btn").addEventListener("click", async () => {
-  const nuevoNombre = prompt("Escribe el nuevo nombre del archivo:", nombreArchivo);
+  // 🔹 Quitar números iniciales y dejar solo la parte después del primer "_Semana"
+  const partes = nombreArchivo.split("_");
+  const indexSemana = partes.findIndex(p => p.toLowerCase().includes("semana"));
+  const nombreLimpioOriginal = indexSemana !== -1 
+    ? partes.slice(indexSemana).join("_") 
+    : nombreArchivo.replace(/^\d+_/, "");
+
+  const nuevoNombre = prompt("Escribe el nuevo nombre del archivo:", nombreLimpioOriginal);
   if (!nuevoNombre) return;
 
   const nuevaSemana = prompt("¿A qué semana quieres mover el archivo? (ej: Semana_1, Semana_2)", semana);
   if (!nuevaSemana) return;
+
+  // 🔹 Limpiar cualquier número nuevo que el usuario haya puesto sin querer
+  const nombreFinal = nuevoNombre.replace(/^\d+_/, "");
+
+  console.log("✅ Nombre limpio final:", nombreFinal);
 
   // Descargar original
   const { data: fileData, error: downloadError } = await supabase.storage.from("hola").download(filePath);
@@ -314,26 +330,6 @@ listarArchivos(filtroSemana.value);
     </div>
   </div>
 </div>
-
-<!--solo usar para proteger el upload-->
-<!-- <script type="module">
-  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-  const supabase = createClient("https://bkmrymsbcnqrxltsmxxm.supabase.co", "eyJh...");
-
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) window.location.href = "login.html";
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-  if (profile.role !== "admin") {
-    alert("Acceso restringido. Solo administradores.");
-    window.location.href = "index.html";
-  }
-</script> -->
 
 </body>
 </html>

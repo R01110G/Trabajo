@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Cursos – Repositorio Universitario</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="img/icon.png">
+</head>
+<body>
+
+<!-- 🔝 Navbar (igual que index.html) -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="img/nuevo.PNG" alt="UPLA Logo" width="40" height="40" class="me-2">
+      Steven Peña Sánchez
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="cursos.html">Cursos</a></li>
+        <li class="nav-item"><a class="nav-link" href="">Ciclos</a></li>
+        <li class="nav-item"><a class="nav-link" href="sobremi.html">Sobre Mi</a></li>
+        <li class="nav-item"><a class="nav-link" href="upload.html">Panel Admin</a></li>
+        <!-- 🔹 Botón dinámico -->
+        <li class="nav-item">
+          <button id="adminBtn" class="btn btn-success ms-2">Iniciar Sesión</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- 🧭 Encabezado -->
+<section class="text-center text-light py-5 mt-5 bg-primary bg-gradient shadow">
+  <div class="container">
+    <h1 class="fw-bold mb-2">Mis Cursos Universitarios 🎓</h1>
+    <p class="lead">Explora los cursos y accede a sus recursos, archivos y proyectos.</p>
+  </div>
+</section>
+
+<!-- 📘 Lista de Cursos -->
+<section id="cursos" class="py-5">
+  <div id="root"></div>
+</section>
+
+<footer class="text-center text-light py-4 bg-dark mt-5">
+  <p>© 2025 Steven Peña – Repositorio Universitario</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Supabase -->
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  const SUPABASE_URL = "https://bkmrymsbcnqrxltsmxxm.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrbXJ5bXNiY25xcnhsdHNteHhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxNzM2MTksImV4cCI6MjA3Mzc0OTYxOX0.Z4puY5w_Gb7GbbpipawQQ755MKsJcJUeyra7-XnL5as";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const adminBtn = document.getElementById("adminBtn");
+
+  async function checkUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      adminBtn.textContent = "Cerrar sesión";
+      adminBtn.classList.replace("btn-success", "btn-danger");
+
+      adminBtn.onclick = async () => {
+        await supabase.auth.signOut();
+        location.reload();
+      };
+    } else {
+      adminBtn.textContent = "Iniciar Sesión";
+      adminBtn.classList.replace("btn-danger", "btn-success");
+      adminBtn.onclick = () => window.location.href = "login.html";
+
+      // Ocultar acceso al panel admin
+      const panelLink = document.querySelector('a[href="upload.html"]');
+      panelLink.style.display = "none";
+    }
+  }
+
+  checkUser();
+</script>
+
+<!-- App React -->
+<script type="text/babel">
+  const cursos = [
+    { img: "https://img.icons8.com/color/96/blueprint.png", nombre: "🏛️ Arquitectura de Software", desc: "Diseño y principios fundamentales de arquitectura de software.", link: "cursos/arqui.html?curso=arquitectura" },
+    { img: "https://img.icons8.com/color/96/law.png", nombre: "⚖️ Legislación Informática", desc: "Normas y leyes aplicadas al ámbito tecnológico.", link: "cursos/legislacion.html?curso=legislacion" },
+    { img: "https://img.icons8.com/color/96/usa.png", nombre: "Inglés IV", desc: "Material de inglés avanzado aplicado al entorno profesional.", link: "cursos/inglesvi.html?curso=ingles" },
+    { img: "https://img.icons8.com/color/96/document.png", nombre: "📑 Taller de Investigación 1", desc: "Documentos y avances en investigación académica.", link: "cursos/tesis.html?curso=investigacion" },
+    { img: "https://img.icons8.com/color/96/online-store.png", nombre: "🛒 Comercio Electrónico", desc: "Estrategias y prácticas de comercio digital.", link: "cursos/comercio.html?curso=comercio" },
+    { img: "https://img.icons8.com/color/96/organization.png", nombre: "🏛️ Gobierno de TI", desc: "Gestión y control estratégico de tecnologías de información.", link: "cursos/gobiernoti.html?curso=gobierno" },
+    { img: "https://img.icons8.com/color/96/artificial-intelligence.png", nombre: "🤖 Machine Learning (Electivo)", desc: "Algoritmos de aprendizaje automático y aplicaciones.", link: "cursos/marchine.html?curso=ml" },
+    { img: "https://img.icons8.com/color/96/cyber-security.png", nombre: "🔒 Seguridad de la Infraestructura de TI 1", desc: "Protección y defensa de infraestructuras tecnológicas.", link: "cursos/seguridad.html?curso=seguridad" }
+  ];
+
+  function App() {
+    return (
+      <div className="contenedor">
+        <h2 className="text-center mb-5 fw-bold text-dark">Mis Cursos</h2>
+        {cursos.map((curso, i) => (
+          <div key={i} className="curso">
+            <img src={curso.img} alt="curso"/>
+            <div className="curso-info">
+              <h3>{curso.nombre}</h3>
+              <p>{curso.desc}</p>
+            </div>
+            <button className="btn-custom" onClick={() => window.location.href = curso.link}>Ver archivos</button>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<App />);
+</script>
+
+</body>
+</html>

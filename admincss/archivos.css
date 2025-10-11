@@ -1,0 +1,178 @@
+/* 🎨 Paleta base */
+:root {
+  --azul-principal: #1E3A8A; /* Azul profundo */
+  --azul-secundario: #2563EB; /* Azul moderno */
+  --azul-claro: #60A5FA; /* Azul suave */
+  --gris-fondo: #F3F4F6; /* Gris perla */
+  --gris-texto: #374151; /* Texto gris oscuro */
+  --blanco: #FFFFFF;
+  --verde-exito: #16A34A;
+  --rojo-error: #DC2626;
+  --amarillo: #FACC15;
+}
+
+/* 🔹 Fondo general */
+body {
+  background: var(--gris-fondo);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--gris-texto);
+}
+
+/* 🔹 Navbar superior */
+nav {
+  background: linear-gradient(90deg, var(--azul-principal), var(--azul-secundario));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+nav h1 {
+  color: var(--blanco);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+nav ul li a {
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--azul-claro);
+}
+
+/* 🔹 Contenedores principales */
+.bg-white {
+  background-color: var(--blanco);
+  border: 1px solid #E5E7EB;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 🔹 Títulos */
+h2 {
+  font-weight: 600;
+  color: var(--azul-principal);
+}
+
+/* 🔹 Inputs y selects */
+input[type="file"],
+select {
+  border: 1px solid #CBD5E1;
+  border-radius: 0.6rem;
+  padding: 0.5rem;
+  background-color: #F9FAFB;
+  color: var(--gris-texto);
+  transition: all 0.2s ease-in-out;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--azul-secundario);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+/* 🔹 Botones */
+button, a {
+  transition: all 0.25s ease-in-out;
+  font-weight: 500;
+}
+
+/* Subir */
+button[type="submit"] {
+  background: var(--azul-secundario);
+  color: var(--blanco);
+  border-radius: 9999px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+button[type="submit"]:hover {
+  background: var(--azul-principal);
+}
+
+/* Cerrar sesión */
+#cerrarSesion {
+  background-color: var(--rojo-error);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+}
+
+#cerrarSesion:hover {
+  background-color: #B91C1C;
+}
+
+/* 🔹 Tabla */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  background-color: var(--azul-principal);
+  color: var(--blanco);
+}
+
+th {
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+td {
+  padding: 0.75rem;
+  color: var(--gris-texto);
+}
+
+/* 🔹 Botones de acciones */
+.ver-btn {
+  background-color: var(--azul-claro);
+}
+
+.ver-btn:hover {
+  background-color: var(--azul-secundario);
+}
+
+.mod-btn {
+  background-color: var(--amarillo);
+  color: #111827;
+}
+
+.mod-btn:hover {
+  background-color: #EAB308;
+}
+
+.del-btn {
+  background-color: var(--rojo-error);
+}
+
+.del-btn:hover {
+  background-color: #B91C1C;
+}
+
+a[download] {
+  background-color: var(--verde-exito);
+}
+
+a[download]:hover {
+  background-color: #15803D;
+}
+
+/* 🔹 Modal */
+#previewModal .bg-white {
+  border-radius: 1rem;
+  border: 1px solid #E5E7EB;
+}
+
+#previewModal h3 {
+  color: var(--azul-principal);
+  font-weight: 600;
+}
+
+/* 🔹 Estado de carga */
+#estado {
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  text-align: center;
+  font-weight: 500;
+}

@@ -66,6 +66,8 @@ body {
   gap: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: #1e293b;
+  justify-content: space-between;
+  margin-left: auto;
 }
 
 .curso:hover {
@@ -103,6 +105,7 @@ body {
   font-size: 0.9rem;
   cursor: pointer;
   transition: 0.3s;
+  margin-left: auto;
 }
 
 .btn-custom:hover {

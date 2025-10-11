@@ -143,12 +143,13 @@ async function cargarArchivos(i, semana) {
 
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td>${file.name}</td>
-            <td>
-                <button class="btn btn-sm btn-success me-2">👁️ Ver</button>
-                <button class="btn btn-sm btn-primary">⬇️ Descargar</button>
-            </td>
+        <td>${file.name}</td>
+        <td class="text-center">
+            <button class="btn btn-sm btn-success me-2" style="min-width:110px;">👁️ Ver</button>
+            <button class="btn btn-sm btn-primary" style="min-width:110px;">⬇️ Descargar</button>
+        </td>
         `;
+
 
         // Botón Ver
         row.querySelector(".btn-success").addEventListener("click", () => {

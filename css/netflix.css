@@ -1,0 +1,170 @@
+/* ==========================
+   GLOBAL
+========================== */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: #f8fafc;
+    margin: 0;
+    padding-top: 70px; /* espacio para navbar fija */
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+.navbar-brand img {
+    border-radius: 8px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #f8fafc;
+    font-weight: 500;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #60a5fa;
+}
+
+/* ==========================
+   HERO
+========================== */
+.hero {
+    text-align: center;
+    padding: 120px 20px 60px 20px;
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #e0f2fe;
+}
+
+/* ==========================
+   EXPOSITOR DE TRABAJOS
+========================== */
+#expositor .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#root-trabajos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.card-trabajo {
+    position: relative;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    color: #f8fafc;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-trabajo:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+}
+
+.card-trabajo h5 {
+    font-size: 0.95rem;
+    margin-top: 12px;
+    word-break: break-word;
+}
+
+/* Overlay con botones */
+.card-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-overlay .btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    width: 100px;
+    transition: transform 0.2s ease;
+}
+
+.card-overlay .btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    border: none;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border: none;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #15803d, #22c55e);
+}
+
+/* Icono de archivo */
+.icon-file {
+    width: 48px;
+    height: 48px;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+footer {
+    background-color: #1e293b;
+    padding: 20px 0;
+    color: #f8fafc;
+    text-align: center;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    #root-trabajos {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .card-overlay .btn {
+        width: 80px;
+        padding: 4px 8px;
+    }
+}

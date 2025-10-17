@@ -87,5 +87,5 @@ app.post("/api/registrar-auth", async (req, res) => {
 
 // 🔹 Puerto del servidor
 app.listen(4000, () => {
-  console.log("Servidor backend corriendo en http://localhost:4000");
+  console.log("Servidor backend corriendo en https://trabajo-render.onrender.com");
 });
